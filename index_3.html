@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            margin-top: 0px;
+        }
+        img {
+            width: 2000px;
+            height: 1000px;
+            filter: blur(200px); /* Заблюрене зображення спочатку */
+            transition: filter 0.5s ease; /* Анімація розмивання */
+        }
+        .cookie-consent {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 370px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Зображення, спочатку заблюрене -->
+    <img id="image" src="C07FA58D-78FB-445E-BAC5-DBA84E4EF6D3.png" alt="Фото" />
+
+    <!-- Аудіо -->
+    <audio id="audio" src="scream55.mp3" preload="auto"></audio>
+
+    <!-- Вікно згоди на файли куки -->
+    <div id="cookieConsent" class="cookie-consent">
+        <p>Ми використовуємо файли cookie. Ви згодні?</p>
+        <button id="acceptCookies">Так</button>
+        <button id="declineCookies">Ні</button>
+    </div>
+
+    <script>
+        // Функція відтворення звуку
+        function playSound() {
+            const audio = document.getElementById('audio');
+            audio.volume = 1.0; // Гучність на максимум
+            audio.play().then(() => {
+                console.log("Аудіо відтворюється.");
+            }).catch(error => {
+                alert("Не вдалося відтворити аудіо.");
+                console.error(error);
+            });
+        }
+
+        // Функція показу зображення (зняття розмиття)
+        function revealImage() {
+            const image = document.getElementById('image');
+            image.style.filter = 'none'; // Зняти розмиття
+        }
+
+        // Запит на розгортання сторінки на весь екран
+        function requestFullScreen() {
+            const docElement = document.documentElement;
+            if (docElement.requestFullscreen) {
+                docElement.requestFullscreen();
+            } else if (docElement.mozRequestFullScreen) { // Firefox
+                docElement.mozRequestFullScreen();
+            } else if (docElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                docElement.webkitRequestFullscreen();
+            } else if (docElement.msRequestFullscreen) { // IE/Edge
+                docElement.msRequestFullscreen();
+            }
+        }
+
+        // Коли користувач натискає "Так" або "Ні"
+        document.getElementById('acceptCookies').addEventListener('click', function() {
+            // Викликати звук та показати зображення
+            playSound();
+            revealImage();
+            requestFullScreen(); // Запит на повноекранний режим
+
+            // Приховати банер згоди
+            document.getElementById('cookieConsent').style.display = 'none';
+        });
+
+        document.getElementById('declineCookies').addEventListener('click', function() {
+            // Викликати звук та показати зображення
+            playSound();
+            revealImage();
+            requestFullScreen(); // Запит на повноекранний режим
+
+            // Приховати банер згоди
+            document.getElementById('cookieConsent').style.display = 'none';
+        });
+
+        // Автоматичний запит на повноекранний режим при завантаженні сторінки
+        window.addEventListener('load', function() {
+            requestFullScreen(); // Запит на повноекранний режим
+        });
+    </script>
+
+</body>
+</html>
